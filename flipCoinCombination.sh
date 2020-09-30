@@ -16,11 +16,11 @@ THH=0
 THT=0
 TTH=0
 TTT=0
+win=0
 declare -A coin
 declare -A scoin
 declare -A dcoin
 declare -A tcoin
-declare -A coint
 coin_flip(){
 	n=$((RANDOM%2))
 	if [ $n -eq 1 ]
@@ -132,25 +132,50 @@ echo "${tcoin[@]}"
 #do
 #        echo "${tcoin[$i]}"
 #done
-echo "Counting all :"
+echo "Counting all Combination :"
 for i in H T HH HT TH TT HHH HHT HTH HTT THH THT TTH TTT
 do
         echo "$i : $(($i))"
 done
-echo "Percentage of all :"
+echo "Percentage of all Combination :"
 for i in H T
 do
         persentage $(($i)) ${#scoin[@]}
         echo "$i = $per %"
+	sc[win]=$per
+	scv[win]=$i
+	win=$((win+1))
 done
+win=0
 for i in HH HT TH TT
 do
 	persentage $(($i)) $((${#scoin[@]}-1))
 	echo "$i = $per %"
+	dc[win]=$per
+	dcv[win]=$i
+        win=$((win+1))
 done
+win=0
 for i in HHH HHT HTH HTT THH THT TTH TTT
 do
         persentage $(($i)) $((${#scoin[@]}-2))
         echo "$i = $per %"
+	tc[win]=$per
+	tcv[win]=$i
+        win=$((win+1))
 done
-
+echo "Winner in Singlet Combination"
+for ((i=0;i<2;i++))
+do
+        echo "${sc[$i]} % = ${scv[$i]}"
+done | sort -nr | head -1
+echo "Winner in Doublet Combination"
+for ((i=0;i<4;i++))
+do
+        echo "${dc[$i]} %     = ${dcv[$i]}"
+done | sort -nr | head -1
+echo "Winner in Triplet Combination"
+for ((i=0;i<8;i++))
+do
+	echo "${tc[$i]} % = ${tcv[$i]}"
+done | sort -nr | head -1
