@@ -84,7 +84,7 @@ do
         persentage ${coin[$i]} ${#scoin[@]}
         echo "$i = $per %"
 done
-for i in H T HH HT TH TT
+for i in HH HT TH TT
 do
 	persentage ${coin[$i]} $((${#scoin[@]}-1))
 	echo "$i = $per %"
