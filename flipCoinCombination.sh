@@ -1,9 +1,11 @@
 ##!/bin/bash -x
 echo "-----------------------Flip coin Combination-------------------------"
+echo "How many time you want flip coin ;"
+read loops
 H=0
 T=0
 loop=0
-loops=21
+#loops=21
 HH=0
 HT=0
 TH=0
@@ -21,6 +23,7 @@ declare -A coin
 declare -A scoin
 declare -A dcoin
 declare -A tcoin
+declare -A com
 coin_flip(){
 	n=$((RANDOM%2))
 	if [ $n -eq 1 ]
@@ -144,6 +147,7 @@ do
         echo "$i = $per %"
 	sc[win]=$per
 	scv[win]=$i
+	com[$i]=$per
 	win=$((win+1))
 done
 win=0
@@ -153,6 +157,7 @@ do
 	echo "$i = $per %"
 	dc[win]=$per
 	dcv[win]=$i
+	com[$i]=$per
         win=$((win+1))
 done
 win=0
@@ -162,6 +167,7 @@ do
         echo "$i = $per %"
 	tc[win]=$per
 	tcv[win]=$i
+	com[$i]=$per
         win=$((win+1))
 done
 echo "Winner in Singlet Combination"
@@ -178,4 +184,9 @@ echo "Winner in Triplet Combination"
 for ((i=0;i<8;i++))
 do
 	echo "${tc[$i]} % = ${tcv[$i]}"
+done | sort -nr | head -1
+echo "Winner in all Combination"
+for i in ${!com[@]}
+do
+	echo "${com[$i]} % = $i"
 done | sort -nr | head -1
